@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Timeline Dashboard - نمایش هوشمند همپوشانی</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="dashboard-container">
+  <div class="header-section">
+    <h2>
+      📋 Job Execution Timeline
+      <span style="font-size: 13px; background: #eef2ff; padding: 4px 12px; border-radius: 40px;">🕒 24-hour</span>
+    </h2>
+    
+    <div class="filter-section">
+      <button id="showAllBtn" class="filter-btn active">📊 نمایش همه جاب‌ها</button>
+      <button id="showOverlapBtn" class="filter-btn">🔴 فقط جاب‌های همپوشان</button>
+      <div class="overlap-info" id="overlapInfo"></div>
+    </div>
+  </div>
+  
+  <div class="chart-wrapper">
+    <div id="chart"></div>
+  </div>
+  
+  <div class="legend">
+    <div><span class="legend-color" style="background: #3b82f6;"></span> اجرای معمولی جاب</div>
+    <div><span class="legend-overlap"></span> <span style="color: #dc2626; font-weight: 600;">بخش همپوشانی</span> (ضخیم‌تر و قرمز)</div>
+    <div><span style="background: #eab308; width: 20px; height: 12px; display: inline-block; border-radius: 12px; margin-right: 6px;"></span> جاب دارای همپوشانی</div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: #eef2f7;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  padding: 24px 20px 40px 20px;
+}
+
+.header-section {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0 0 16px 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1e2a3a;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #475569;
+}
+
+.filter-btn:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+}
+
+.overlap-info {
+  font-size: 12px;
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-weight: 600;
+}
+
+.chart-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: white;
+}
+
+.timeline-header {
+  display: flex;
+  border-bottom: 2px solid #cbd5e1;
+  background: #f8fafc;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-width: 1200px;
+}
+
+.hour-marker {
+  flex: 1;
+  min-width: 50px;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e3a5f;
+  text-align: center;
+  border-left: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.hour-marker:first-child {
+  border-left: none;
+}
+
+#chart {
+  position: relative;
+  min-width: 1200px;
+}
+
+.row {
+  position: relative;
+  min-height: 50px;
+  border-bottom: 0.5px solid #e5e9f0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background: linear-gradient(90deg, #f0f9ff 0%, #ffffff 100%);
+  box-shadow: inset 0 0 0 2px #3b82f6;
+  z-index: 5;
+  position: relative;
+}
+
+.row:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  background: #3b82f6;
+  border-radius: 0 3px 3px 0;
+  z-index: 10;
+}
+
+.label-area {
+  position: sticky;
+  left: 0;
+  width: 280px;
+  background: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 0 20px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #0b355c;
+  gap: 12px;
+  z-index: 15;
+  border-right: 2px solid #e2edf7;
+  margin-right: 8px;
+  height: 50px;
+}
+
+.job-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.duration-badge {
+  background: #e2f0ff;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'SF Mono', monospace;
+  color: #1e5a9c;
+  white-space: nowrap;
+}
+
+.bars-container {
+  position: relative;
+  flex: 1;
+  min-height: 50px;
+  margin-left: 288px;
+}
+
+.bar {
+  position: absolute;
+  border-radius: 12px;
+  opacity: 0.85;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  min-width: 3px;
+  z-index: 10;
+}
+
+.bar:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  height: 28px !important;
+  top: 7px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 20;
+}
+
+.overlap-highlight-bar {
+  position: absolute;
+  transition: all 0.2s;
+  cursor: pointer;
+  z-index: 15;
+}
+
+.overlap-highlight-bar:hover {
+  transform: scaleY(1.05);
+  box-shadow: 0 0 16px rgba(239,68,68,0.8) !important;
+  z-index: 25;
+}
+
+.no-run {
+  margin-left: 288px;
+  padding: 0 20px;
+  background: #f8fafc;
+  color: #94a3b8;
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+  border-radius: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-radius: 16px;
+  font-size: 11px;
+  align-items: center;
+}
+
+.legend-color {
+  width: 24px;
+  height: 12px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.legend-overlap {
+  display: inline-block;
+  width: 32px;
+  height: 12px;
+  background: rgba(239, 68, 68, 0.85);
+  border-radius: 12px;
+  border: 1px solid #dc2626;
+  margin-right: 6px;
+}
