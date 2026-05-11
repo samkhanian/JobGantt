@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Execution Timeline | Full-Screen Viewer</title>
+  <title>Job Execution Timeline | Full-Screen · خط عمودی پویا</title>
   <style>
     * {
       box-sizing: border-box;
@@ -21,7 +21,7 @@
       overflow: hidden;
     }
     
-    /* full-screen container — uses 100% of viewport */
+    /* full-screen container */
     .container {
       width: 100%;
       height: 100%;
@@ -29,81 +29,70 @@
       display: flex;
       flex-direction: column;
       border-radius: 0;
-      box-shadow: none;
-      padding: 20px 24px 24px 24px;
+      padding: 16px 20px 20px 20px;
       overflow: hidden;
     }
     
     h1 {
-      font-size: 1.7rem;
-      margin-bottom: 4px;
+      font-size: 1.5rem;
+      margin-bottom: 2px;
       color: #0f172a;
       font-weight: 600;
-      letter-spacing: -0.3px;
     }
     
     .subtitle {
       color: #475569;
-      margin-bottom: 20px;
-      font-size: 0.85rem;
+      margin-bottom: 14px;
+      font-size: 0.75rem;
       border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
     
     .filter-bar {
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       align-items: center;
       flex-shrink: 0;
     }
     
     .filter-btn {
-      padding: 8px 22px;
+      padding: 6px 18px;
       border: 1px solid #cbd5e1;
       background: #ffffff;
       border-radius: 40px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       transition: all 0.2s ease;
-      color: #1e293b;
     }
     
     .filter-btn.active {
       background: #3b82f6;
       color: white;
       border-color: #3b82f6;
-      box-shadow: 0 2px 6px rgba(59,130,246,0.2);
-    }
-    
-    .filter-btn:hover {
-      background: #e2e8f0;
-      transform: scale(0.97);
     }
     
     .info-text {
       background: #fef2f2;
-      padding: 6px 16px;
+      padding: 4px 14px;
       border-radius: 40px;
-      font-size: 12px;
-      color: #dc2626;
+      font-size: 11px;
       font-weight: 600;
+      color: #dc2626;
       margin-left: auto;
     }
     
-    /* CHART CONTAINER — takes remaining space, full scroll inside */
+    /* chart container with scrolling both directions */
     .chart-container {
       position: relative;
       flex: 1;
       min-height: 0;
-      overflow-x: auto;
-      overflow-y: auto;
+      overflow: auto;
       border: 1px solid #e2e8f0;
-      border-radius: 20px;
+      border-radius: 16px;
       background: white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
     
     .timeline {
@@ -111,7 +100,7 @@
       min-width: 1100px;
     }
     
-    /* header row: NO CLOCK/HOUR MARKERS — removed */
+    /* header */
     .timeline-header {
       display: flex;
       position: sticky;
@@ -122,34 +111,26 @@
     }
     
     .label-header {
-      width: 280px;
+      width: 240px;
       flex-shrink: 0;
-      padding: 12px 18px;
+      padding: 8px 12px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 11px;
       color: #0c4a6e;
       background: #f1f5f9;
       border-right: 2px solid #cbd5e1;
-      letter-spacing: 0.3px;
     }
     
-    /* time-header completely removed — no hour markers, no 24h grid */
-    .time-header {
-      flex: 1;
+    /* hidden time header */
+    .time-header-dummy {
       display: none;
     }
     
-    /* new placeholder for timeline ruler: hidden because we REMOVED the hour display */
-    /* we keep functional empty container for position calculations but hide visually */
-    .hidden-ruler {
-      display: none;
-    }
-    
-    /* redesigned timeline row */
+    /* ردیف‌ها با ارتفاع کم و فاصله حداقل */
     .timeline-row {
       display: flex;
-      height: 48px;
-      border-bottom: 1px solid #eef2ff;
+      height: 32px;
+      border-bottom: 1px solid #ecf3fa;
       position: relative;
     }
     
@@ -158,15 +139,15 @@
     }
     
     .job-label {
-      width: 280px;
+      width: 240px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px 0 20px;
-      font-size: 13px;
+      padding: 0 8px 0 12px;
+      font-size: 11px;      /* فونت کوچک‌تر */
       font-weight: 600;
-      color: #1e293b;
+      color: #1f3a5f;
       background: white;
       border-right: 2px solid #e2edf7;
       position: sticky;
@@ -177,54 +158,55 @@
     
     .duration-badge {
       background: #e6f0ff;
-      padding: 4px 10px;
-      border-radius: 32px;
-      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 24px;
+      font-size: 9px;
       font-weight: 700;
       color: #1e5a9c;
-      font-family: monospace;
     }
     
     .bars-container {
       flex: 1;
       position: relative;
-      height: 48px;
+      height: 32px;
       background: #ffffff;
     }
     
     .bar {
       position: absolute;
-      top: 8px;
-      height: 32px;
+      top: 4px;
+      height: 24px;
       background: #3b82f6;
       opacity: 0.85;
       cursor: pointer;
-      min-width: 4px;
+      min-width: 3px;
       z-index: 10;
-      border-radius: 8px;
-      transition: all 0.1s;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      border-radius: 6px;
+      transition: 0.05s linear;
     }
     
     .bar:hover {
       opacity: 1;
       filter: brightness(1.05);
-      transform: scaleY(1.02);
-      box-shadow: 0 2px 8px rgba(59,130,246,0.3);
     }
     
     .overlay-highlight {
       position: absolute;
-      top: 8px;
-      height: 32px;
-      background: rgba(239, 68, 68, 0.28);
-      border: 1.5px solid #dc2626;
-      border-radius: 8px;
-      cursor: pointer;
+      top: 4px;
+      height: 24px;
+      background: rgba(239, 68, 68, 0.3);
+      border: 1px solid #dc2626;
+      border-radius: 6px;
       z-index: 15;
       pointer-events: none;
     }
     
+    /* خط عمودی: اکنون position fixed نسبت به container? برای اسکرول باید absolute و relative پیچیده شود */
+    /* راه حل: wrapper نسبی و خط به صورت sticky-like ولی با absolute نسبت به .chart-container؟
+       برای اینکه خط با اسکرول افقی و عمودی حرکت کند، خط را داخل .timeline-grid قرار میدهیم و 
+       از absolute با مختصات real-time استفاده می‌کنیم که هنگام اسکرول با جاوااسکریپت تنظیم شود.
+       روش ساده‌تر: خط را همانند قبل داخل chart-container قرار دهیم و هنگام اسکرول موقعیت خط را بروز کنیم.
+    */
     .vertical-line {
       position: absolute;
       top: 0;
@@ -235,73 +217,67 @@
       z-index: 100;
       box-shadow: 0 0 6px #f97316;
       display: none;
-      transition: width 0.05s;
+      will-change: transform;
     }
     
     .time-tooltip {
-      position: absolute;
+      position: fixed;
       background: #0f172a;
       color: #facc15;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-family: monospace;
       font-weight: bold;
       pointer-events: none;
       z-index: 101;
       white-space: nowrap;
       border: 1px solid #f97316;
       display: none;
-      letter-spacing: 0.5px;
     }
     
     .info-box {
-      position: absolute;
+      position: fixed;
       background: #0a0f1c;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(4px);
       color: #e2e8f0;
-      padding: 14px 16px;
-      border-radius: 16px;
-      font-size: 12px;
-      font-family: 'SF Mono', monospace;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-family: monospace;
       pointer-events: none;
       z-index: 102;
-      max-width: 360px;
-      border-left: 4px solid #f97316;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+      max-width: 320px;
+      border-left: 3px solid #f97316;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
       display: none;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     
-    /* Custom scrollbar */
+    /* اسکرول نرم */
     .chart-container::-webkit-scrollbar {
-      height: 8px;
-      width: 8px;
+      height: 7px;
+      width: 7px;
     }
     .chart-container::-webkit-scrollbar-track {
-      background: #e9eef3;
-      border-radius: 20px;
+      background: #e2e8f0;
+      border-radius: 10px;
     }
     .chart-container::-webkit-scrollbar-thumb {
       background: #94a3b8;
-      border-radius: 20px;
-    }
-    
-    @media (max-width: 780px) {
-      .job-label { width: 220px; }
-      .label-header { width: 220px; }
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 <div class="container">
   <h1>⚡ Job Execution Timeline</h1>
-  <div class="subtitle">نمایش کامل زمانبندی اجرای جاب‌ها · بدون نمایش ساعت · فول اسکرین</div>
+  <div class="subtitle">بدون نمایش ساعت · فشرده · خط عمودی همراه با اسکرول</div>
   
   <div class="filter-bar">
     <button id="btnAll" class="filter-btn active">📋 همه جاب‌ها</button>
     <button id="btnOverlap" class="filter-btn">🔴 فقط جاب‌های همپوشان</button>
-    <div id="info" class="info-text">✅ بارگذاری...</div>
+    <div id="info" class="info-text">در حال بارگذاری...</div>
   </div>
   
   <div class="chart-container" id="chartContainer">
@@ -314,10 +290,15 @@
   let allJobs = [];
   let currentFilter = 'all';
   let isSnapped = false;
-  let currentLine = null;
-  let currentTooltip = null;
-  let currentInfoBox = null;
+  let currentSnappedSec = null;
   let importantPoints = [];
+  
+  // elements global
+  let verticalLine = null;
+  let tooltipDiv = null;
+  let infoBoxDiv = null;
+  let activeOverlaps = [];
+  let activeJobsForRender = [];
   
   function toSeconds(timeStr) {
     const parts = timeStr.split(':');
@@ -327,15 +308,13 @@
   function formatDuration(sec) {
     const hours = Math.floor(sec / 3600);
     const mins = Math.floor((sec % 3600) / 60);
-    const remainingSec = sec % 60;
+    const secs = sec % 60;
     if (hours > 0) {
-      if (mins === 0 && remainingSec === 0) return `${hours}h`;
-      if (remainingSec === 0) return `${hours}h ${mins}m`;
-      return `${hours}h ${mins}m ${remainingSec}s`;
+      if (mins === 0 && secs === 0) return `${hours}h`;
+      return `${hours}h ${mins}m`;
     }
-    if (mins === 0) return `${remainingSec}s`;
-    if (remainingSec === 0) return `${mins}m`;
-    return `${mins}m ${remainingSec}s`;
+    if (mins === 0) return `${secs}s`;
+    return `${mins}m ${secs}s`;
   }
   
   function secondsToTime(sec) {
@@ -345,52 +324,39 @@
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   }
   
-  // پیدا کردن همه همپوشانی‌ها
   function findAllOverlaps(jobs) {
     const overlaps = [];
     for (let i = 0; i < jobs.length; i++) {
       for (let j = i + 1; j < jobs.length; j++) {
-        const start1 = toSeconds(jobs[i].start);
-        const end1 = toSeconds(jobs[i].end);
-        const start2 = toSeconds(jobs[j].start);
-        const end2 = toSeconds(jobs[j].end);
-        
-        if (start1 < end2 && start2 < end1) {
-          const overlapStart = Math.max(start1, start2);
-          const overlapEnd = Math.min(end1, end2);
-          overlaps.push({
-            start: overlapStart,
-            end: overlapEnd,
-            jobs: [jobs[i].name, jobs[j].name]
-          });
+        const s1 = toSeconds(jobs[i].start);
+        const e1 = toSeconds(jobs[i].end);
+        const s2 = toSeconds(jobs[j].start);
+        const e2 = toSeconds(jobs[j].end);
+        if (s1 < e2 && s2 < e1) {
+          const oStart = Math.max(s1, s2);
+          const oEnd = Math.min(e1, e2);
+          overlaps.push({ start: oStart, end: oEnd, jobs: [jobs[i].name, jobs[j].name] });
         }
       }
     }
-    overlaps.sort((a, b) => a.start - b.start);
+    overlaps.sort((a,b) => a.start - b.start);
     const merged = [];
     for (const seg of overlaps) {
-      if (merged.length === 0 || seg.start > merged[merged.length - 1].end) {
+      if (merged.length === 0 || seg.start > merged[merged.length-1].end) {
         merged.push({ start: seg.start, end: seg.end, jobs: [...seg.jobs] });
       } else {
-        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, seg.end);
-        merged[merged.length - 1].jobs = [...new Set([...merged[merged.length - 1].jobs, ...seg.jobs])];
+        merged[merged.length-1].end = Math.max(merged[merged.length-1].end, seg.end);
+        merged[merged.length-1].jobs = [...new Set([...merged[merged.length-1].jobs, ...seg.jobs])];
       }
     }
     return merged;
   }
   
-  // نقاط مهم
   function collectImportantPoints(jobs, overlaps) {
     const points = new Set();
-    jobs.forEach(job => {
-      points.add(toSeconds(job.start));
-      points.add(toSeconds(job.end));
-    });
-    overlaps.forEach(overlap => {
-      points.add(overlap.start);
-      points.add(overlap.end);
-    });
-    return Array.from(points).sort((a, b) => a - b);
+    jobs.forEach(j => { points.add(toSeconds(j.start)); points.add(toSeconds(j.end)); });
+    overlaps.forEach(o => { points.add(o.start); points.add(o.end); });
+    return Array.from(points).sort((a,b)=>a-b);
   }
   
   function findNearestPoint(mouseSec, points) {
@@ -398,173 +364,190 @@
     let minDiff = Math.abs(mouseSec - nearest);
     for (const p of points) {
       const diff = Math.abs(mouseSec - p);
-      if (diff < minDiff) {
-        minDiff = diff;
-        nearest = p;
-      }
+      if (diff < minDiff) { minDiff = diff; nearest = p; }
     }
     return nearest;
   }
   
   function getPointInfo(sec, jobs, overlaps) {
-    const info = {
-      time: secondsToTime(sec),
-      starting: [],
-      ending: [],
-      inOverlap: []
-    };
+    const info = { time: secondsToTime(sec), starting: [], ending: [], inOverlap: [] };
     jobs.forEach(job => {
       if (toSeconds(job.start) === sec) info.starting.push(job.name);
       if (toSeconds(job.end) === sec) info.ending.push(job.name);
     });
     overlaps.forEach(overlap => {
       if (sec >= overlap.start && sec <= overlap.end) {
-        info.inOverlap.push({
-          start: secondsToTime(overlap.start),
-          end: secondsToTime(overlap.end),
-          jobs: overlap.jobs
-        });
+        info.inOverlap.push({ start: secondsToTime(overlap.start), end: secondsToTime(overlap.end), jobs: overlap.jobs });
       }
     });
     return info;
   }
   
-  function getTimelineWidth() {
-    const barsContainerExample = document.querySelector('.bars-container');
-    if (!barsContainerExample) return 0;
-    const row = document.querySelector('.timeline-row');
-    if (!row) return 0;
-    const label = row.querySelector('.job-label');
-    if (!label) return 0;
-    const rowWidth = row.clientWidth;
-    const labelWidth = label.offsetWidth;
-    const available = rowWidth - labelWidth;
-    return available > 0 ? available : 1200;
+  // محاسبه عرض نوار بر اساس اولین bars-container
+  function getBarsWidth() {
+    const bc = document.querySelector('.bars-container');
+    if (bc) return bc.clientWidth;
+    return 1000;
   }
   
-  // رندر اصلی - بدون نمایش ساعت و بدون هیچ text زمان در هدر
+  // به روزرسانی موقعیت خط عمودی بر اساس نقطه فعلی (با در نظر گرفتن اسکرول)
+  function updateVerticalLinePosition(sec, forceSnapOffset = false) {
+    if (!verticalLine) return;
+    const bars = document.querySelector('.bars-container');
+    if (!bars) return;
+    const barsRect = bars.getBoundingClientRect();
+    const containerRect = document.getElementById('chartContainer').getBoundingClientRect();
+    const barWidth = bars.clientWidth;
+    if (barWidth <= 0) return;
+    const leftRatio = sec / DAY_SECONDS;
+    const leftOffsetWithinBars = leftRatio * barWidth;
+    const absoluteLeft = barsRect.left - containerRect.left + leftOffsetWithinBars;
+    verticalLine.style.left = absoluteLeft + 'px';
+    verticalLine.style.display = 'block';
+  }
+  
+  // تابعی که هنگام اسکرول، موقعیت خط snapped را مجدداً محاسبه می‌کند
+  function repositionSnappedLine() {
+    if (isSnapped && currentSnappedSec !== null) {
+      updateVerticalLinePosition(currentSnappedSec);
+    }
+  }
+  
+  // رندر کامل
   function render(jobs) {
+    activeJobsForRender = jobs;
     const overlaps = findAllOverlaps(jobs);
+    activeOverlaps = overlaps;
     const points = collectImportantPoints(jobs, overlaps);
     importantPoints = points;
     
     const timelineDiv = document.getElementById('timeline');
     timelineDiv.innerHTML = '';
     
-    // HEADER: فقط شامل label-header ، بدون time-header (حذف کامل)
+    // header
     const header = document.createElement('div');
     header.className = 'timeline-header';
-    
     const labelHeader = document.createElement('div');
     labelHeader.className = 'label-header';
     labelHeader.textContent = '📌 Job Name';
-    
-    // هیچ element دیگری برای نمایش ساعت اضافه نمی‌کنیم. 
-    // به جای time-header یک div مخفی برای حفظ layout flex قرار می‌دهیم اما نادیده گرفته می‌شود
-    const dummySpacer = document.createElement('div');
-    dummySpacer.style.flex = '1';
-    dummySpacer.style.display = 'none';   // کاملاً حذف شده از دید
-    
     header.appendChild(labelHeader);
-    header.appendChild(dummySpacer);
+    const dummy = document.createElement('div');
+    dummy.style.flex = '1';
+    dummy.style.display = 'none';
+    header.appendChild(dummy);
     timelineDiv.appendChild(header);
     
-    // محاسبه عرض نوارهای زمان بر اساس DOM پس از append
-    setTimeout(() => {
-      recalcAndRenderRows(jobs, overlaps, points, timelineDiv);
-    }, 20);
-  }
-  
-  function recalcAndRenderRows(jobs, overlaps, points, timelineDiv) {
-    // گرفتن عرض واقعی نوارها از اولین ردیف یا کانتینر
-    const container = document.getElementById('chartContainer');
-    if (!container) return;
-    const firstRowForCalibration = document.querySelector('.timeline-row');
-    let timelineWidth = 0;
-    if (firstRowForCalibration) {
-      const labelWid = firstRowForCalibration.querySelector('.job-label')?.offsetWidth || 280;
-      const rowTotalW = firstRowForCalibration.clientWidth;
-      timelineWidth = rowTotalW - labelWid;
-    }
-    if (!timelineWidth || timelineWidth < 200) {
-      timelineWidth = container.clientWidth - 290;
-      if (timelineWidth < 400) timelineWidth = 1100;
-    }
-    
-    // گروه‌بندی بر اساس نام (در صورت تکراری بودن رکوردها)
+    // گروه‌بندی جاب ها
     const jobMap = new Map();
     jobs.forEach(job => {
       if (!jobMap.has(job.name)) jobMap.set(job.name, []);
       jobMap.get(job.name).push(job);
     });
     
-    // حذف ردیف‌های قبلی (بجز هدر)
-    const existingRows = timelineDiv.querySelectorAll('.timeline-row');
-    existingRows.forEach(row => row.remove());
-    
+    // ابتدا ردیف‌ها را می‌سازیم بدون width دقیق (بعدا تنظیم می‌شود)
     for (const [jobName, runs] of jobMap) {
       const row = document.createElement('div');
       row.className = 'timeline-row';
-      
       const label = document.createElement('div');
       label.className = 'job-label';
       const nameSpan = document.createElement('span');
       nameSpan.textContent = jobName;
-      
       let totalSec = 0;
       runs.forEach(r => totalSec += toSeconds(r.end) - toSeconds(r.start));
       const durationSpan = document.createElement('span');
       durationSpan.className = 'duration-badge';
       durationSpan.textContent = formatDuration(totalSec);
-      
       label.appendChild(nameSpan);
       label.appendChild(durationSpan);
       
       const barsContainer = document.createElement('div');
       barsContainer.className = 'bars-container';
       barsContainer.style.position = 'relative';
-      
-      // رسم بارهای اصلی
-      runs.forEach(run => {
-        const startSec = toSeconds(run.start);
-        const endSec = toSeconds(run.end);
-        const left = (startSec / DAY_SECONDS) * timelineWidth;
-        const width = ((endSec - startSec) / DAY_SECONDS) * timelineWidth;
-        const bar = document.createElement('div');
-        bar.className = 'bar';
-        bar.style.left = left + 'px';
-        bar.style.width = Math.max(width, 4) + 'px';
-        bar.title = `${jobName}\n⏱ ${run.start} → ${run.end}\n⌛ مدت: ${formatDuration(endSec - startSec)}`;
-        barsContainer.appendChild(bar);
-      });
-      
-      // رسم هایلایت همپوشانی
-      overlaps.forEach(overlap => {
-        if (overlap.jobs.includes(jobName)) {
-          const left = (overlap.start / DAY_SECONDS) * timelineWidth;
-          const width = ((overlap.end - overlap.start) / DAY_SECONDS) * timelineWidth;
-          const highlight = document.createElement('div');
-          highlight.className = 'overlay-highlight';
-          highlight.style.left = left + 'px';
-          highlight.style.width = Math.max(width, 4) + 'px';
-          highlight.title = `⚠️ همپوشانی زمانی\n${secondsToTime(overlap.start)} → ${secondsToTime(overlap.end)}\nجاب‌ها: ${overlap.jobs.join(' و ')}`;
-          barsContainer.appendChild(highlight);
-        }
-      });
-      
+      // ذخیره داده‌های runs در attributes برای رندر مجدد عرض
+      barsContainer.setAttribute('data-job', jobName);
+      barsContainer.jobRuns = runs; // attach for later
       row.appendChild(label);
       row.appendChild(barsContainer);
       timelineDiv.appendChild(row);
     }
     
-    // اطمینان از اینکه ردیف‌ها نمایش داده شده‌اند و tracker متصل شود
-    setupMouseTracker(jobs, overlaps, points);
+    // پس از append شدن، عرض نوارها را محاسبه و نوارها را رسم می‌کنیم
+    setTimeout(() => {
+      const barContainers = document.querySelectorAll('.bars-container');
+      if (barContainers.length === 0) return;
+      const referenceWidth = barContainers[0].clientWidth;
+      if (referenceWidth === 0) return;
+      
+      // برای هر container بارها را رسم کن
+      const rows = document.querySelectorAll('.timeline-row');
+      let idx = 0;
+      for (const [jobName, runs] of jobMap) {
+        const barsContainer = rows[idx]?.querySelector('.bars-container');
+        if (!barsContainer) { idx++; continue; }
+        barsContainer.innerHTML = ''; // clear placeholders
+        
+        // رسم بارهای اصلی
+        runs.forEach(run => {
+          const startSec = toSeconds(run.start);
+          const endSec = toSeconds(run.end);
+          const left = (startSec / DAY_SECONDS) * referenceWidth;
+          const width = ((endSec - startSec) / DAY_SECONDS) * referenceWidth;
+          const bar = document.createElement('div');
+          bar.className = 'bar';
+          bar.style.left = left + 'px';
+          bar.style.width = Math.max(width, 3) + 'px';
+          bar.title = `${jobName}\n${run.start} → ${run.end}\nمدت: ${formatDuration(endSec - startSec)}`;
+          barsContainer.appendChild(bar);
+        });
+        
+        // رسم هایلایت همپوشانی
+        overlaps.forEach(overlap => {
+          if (overlap.jobs.includes(jobName)) {
+            const left = (overlap.start / DAY_SECONDS) * referenceWidth;
+            const width = ((overlap.end - overlap.start) / DAY_SECONDS) * referenceWidth;
+            const hl = document.createElement('div');
+            hl.className = 'overlay-highlight';
+            hl.style.left = left + 'px';
+            hl.style.width = Math.max(width, 3) + 'px';
+            hl.title = `همپوشانی: ${secondsToTime(overlap.start)} → ${secondsToTime(overlap.end)}\n${overlap.jobs.join(' , ')}`;
+            barsContainer.appendChild(hl);
+          }
+        });
+        idx++;
+      }
+      
+      // بعد از رندر، اگر snapped فعال بود، موقعیت خط را بروز کن
+      if (isSnapped && currentSnappedSec !== null) {
+        updateVerticalLinePosition(currentSnappedSec);
+      }
+      attachScrollAndResizeEvents();
+    }, 30);
   }
   
-  function setupMouseTracker(jobs, overlaps, points) {
+  // اتصال رخدادهای اسکرول و ریسایز برای نگهداری خط عمودی
+  function attachScrollAndResizeEvents() {
     const container = document.getElementById('chartContainer');
-    const timelineDiv = document.getElementById('timeline');
+    if (!container) return;
+    // حذف رخدادهای قبلی برای جلوگیری از چند بار
+    container.removeEventListener('scroll', repositionSnappedLine);
+    container.removeEventListener('resize', repositionSnappedLine);
+    container.addEventListener('scroll', repositionSnappedLine);
+    window.removeEventListener('resize', repositionSnappedLine);
+    window.addEventListener('resize', () => {
+      if (isSnapped && currentSnappedSec !== null) {
+        setTimeout(() => updateVerticalLinePosition(currentSnappedSec), 20);
+      } else {
+        // در حالت عادی هم اگر خط فعال نیست اما ماوس حرکت بعدا
+      }
+    });
+  }
+  
+  // راه‌اندازی موس و خط پویا به همراه اسکرول
+  function initMouseTracking() {
+    const container = document.getElementById('chartContainer');
+    if (!container) return;
     
+    // حذف المانهای قبلی
     const oldLine = document.querySelector('.vertical-line');
     const oldTooltip = document.querySelector('.time-tooltip');
     const oldInfoBox = document.querySelector('.info-box');
@@ -572,194 +555,158 @@
     if (oldTooltip) oldTooltip.remove();
     if (oldInfoBox) oldInfoBox.remove();
     
-    const line = document.createElement('div');
-    line.className = 'vertical-line';
-    const tooltip = document.createElement('div');
-    tooltip.className = 'time-tooltip';
-    const infoBox = document.createElement('div');
-    infoBox.className = 'info-box';
+    verticalLine = document.createElement('div');
+    verticalLine.className = 'vertical-line';
+    tooltipDiv = document.createElement('div');
+    tooltipDiv.className = 'time-tooltip';
+    infoBoxDiv = document.createElement('div');
+    infoBoxDiv.className = 'info-box';
     
-    container.appendChild(line);
-    container.appendChild(tooltip);
-    container.appendChild(infoBox);
+    container.appendChild(verticalLine);
+    container.appendChild(tooltipDiv);
+    container.appendChild(infoBoxDiv);
     
-    let currentPoint = null;
-    
-    // محاسبه عرض نوار نمودار پویا (بر اساس .bars-container موجود)
-    function getCurrentBarsWidth() {
-      const anyBarContainer = document.querySelector('.bars-container');
-      if (anyBarContainer) return anyBarContainer.clientWidth;
-      return container.clientWidth - 290;
-    }
+    let lastMouseSec = null;
+    let currentHoverPoint = null;
     
     container.addEventListener('mousemove', (e) => {
       if (isSnapped) return;
-      const rect = container.getBoundingClientRect();
-      const barsContainers = document.querySelectorAll('.bars-container');
-      if (barsContainers.length === 0) return;
-      const firstBars = barsContainers[0];
-      const barsRect = firstBars.getBoundingClientRect();
-      const relativeX = e.clientX - barsRect.left;
-      const barWidth = barsRect.width;
-      if (relativeX >= 0 && relativeX <= barWidth && barWidth > 0) {
-        const mouseSec = (relativeX / barWidth) * DAY_SECONDS;
-        const nearestSec = findNearestPoint(mouseSec, points);
-        const nearestLeft = (nearestSec / DAY_SECONDS) * barWidth;
-        const absoluteLeft = barsRect.left - rect.left + nearestLeft;
-        
-        line.style.display = 'block';
-        line.style.left = absoluteLeft + 'px';
-        tooltip.style.display = 'block';
-        tooltip.innerHTML = `🕒 ${secondsToTime(nearestSec)}`;
-        tooltip.style.left = (e.clientX - rect.left + 16) + 'px';
-        tooltip.style.top = (e.clientY - rect.top - 40) + 'px';
-        currentPoint = nearestSec;
-        infoBox.style.display = 'none';
+      const bars = document.querySelector('.bars-container');
+      if (!bars) return;
+      const barsRect = bars.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const relX = e.clientX - barsRect.left;
+      if (relX >= 0 && relX <= barsRect.width) {
+        const barWidth = bars.clientWidth;
+        const mouseSec = (relX / barWidth) * DAY_SECONDS;
+        const nearestSec = findNearestPoint(mouseSec, importantPoints);
+        currentHoverPoint = nearestSec;
+        const leftRatio = nearestSec / DAY_SECONDS;
+        const leftOffset = leftRatio * barWidth;
+        const absoluteLeft = barsRect.left - containerRect.left + leftOffset;
+        verticalLine.style.left = absoluteLeft + 'px';
+        verticalLine.style.display = 'block';
+        tooltipDiv.style.display = 'block';
+        tooltipDiv.innerHTML = `🕐 ${secondsToTime(nearestSec)}`;
+        tooltipDiv.style.left = (e.clientX + 12) + 'px';
+        tooltipDiv.style.top = (e.clientY - 35) + 'px';
+        lastMouseSec = nearestSec;
       } else {
-        line.style.display = 'none';
-        tooltip.style.display = 'none';
-        currentPoint = null;
+        verticalLine.style.display = 'none';
+        tooltipDiv.style.display = 'none';
+        currentHoverPoint = null;
       }
     });
     
     container.addEventListener('click', (e) => {
-      if (currentPoint !== null && !isSnapped) {
+      if (!isSnapped && currentHoverPoint !== null) {
         isSnapped = true;
-        const info = getPointInfo(currentPoint, jobs, overlaps);
+        currentSnappedSec = currentHoverPoint;
+        const info = getPointInfo(currentSnappedSec, activeJobsForRender, activeOverlaps);
+        let html = `<div style="font-weight:bold; border-bottom:1px solid #f97316; padding-bottom:4px; margin-bottom:6px;">📍 ${info.time}</div>`;
+        if (info.starting.length) html += `<div>🎬 شروع: ${info.starting.join(', ')}</div>`;
+        if (info.ending.length) html += `<div>🏁 پایان: ${info.ending.join(', ')}</div>`;
+        if (info.inOverlap.length) {
+          html += `<div>🔁 همپوشانی‌ها:</div>`;
+          info.inOverlap.forEach(o => html += `<div style="margin-left:8px;">⏱ ${o.start} → ${o.end}<br> <span style="font-size:9px;">${o.jobs.join(' , ')}</span></div>`);
+        }
+        if(info.starting.length===0 && info.ending.length===0 && info.inOverlap.length===0) html+=`<div>⏺ بدون رویداد خاص</div>`;
+        html += `<div style="margin-top:8px; font-size:9px; color:#aaa;">🔁 کلیک دوباره برای خروج</div>`;
+        infoBoxDiv.innerHTML = html;
         
-        let html = `<div style="font-weight:bold; margin-bottom:10px; border-bottom:1px solid #f97316; padding-bottom:5px;">📍 ${info.time}</div>`;
-        if (info.starting.length > 0) {
-          html += `<div style="margin-top:6px;">🎬 <span style="color:#86efac;">شروع:</span></div>`;
-          info.starting.forEach(j => html += `<div style="margin-left:14px;">▶ ${j}</div>`);
-        }
-        if (info.ending.length > 0) {
-          html += `<div style="margin-top:6px;">🏁 <span style="color:#fca5a5;">پایان:</span></div>`;
-          info.ending.forEach(j => html += `<div style="margin-left:14px;">■ ${j}</div>`);
-        }
-        if (info.inOverlap.length > 0) {
-          html += `<div style="margin-top:8px;">🔁 <span style="color:#fdba74;">همپوشانی فعال:</span></div>`;
-          info.inOverlap.forEach(o => {
-            html += `<div style="margin-left:12px; background:#1e293b; border-radius:12px; padding:5px 8px; margin-top:6px;">
-                      ⏱ ${o.start} → ${o.end}<br>
-                      <span style="font-size:10px; color:#94a3b8;">${o.jobs.join(' · ')}</span>
-                     </div>`;
-          });
-        }
-        if (info.starting.length === 0 && info.ending.length === 0 && info.inOverlap.length === 0) {
-          html += `<div style="margin-top:6px; color:#a5b4fc;">⏺ بدون رویداد خاص</div>`;
-        }
-        html += `<div style="margin-top:10px; font-size:9px; color:#6c86a8; border-top:1px solid #2d3a5e; padding-top:6px;">🔍 کلیک دوباره برای بستن</div>`;
-        infoBox.innerHTML = html;
+        // موقعیت باکس با fixed و رعایت حاشیه
+        infoBoxDiv.style.display = 'block';
+        const boxX = e.clientX + 20;
+        const boxY = e.clientY - 80;
+        infoBoxDiv.style.left = (boxX + 240 > window.innerWidth ? boxX - 280 : boxX) + 'px';
+        infoBoxDiv.style.top = Math.max(10, boxY) + 'px';
         
-        // موقعیت باکس اطلاعات
-        const rect = container.getBoundingClientRect();
-        const barsDiv = document.querySelector('.bars-container');
-        if (barsDiv) {
-          const barsRect = barsDiv.getBoundingClientRect();
-          const widthBars = barsRect.width;
-          const clickRel = (currentPoint / DAY_SECONDS) * widthBars;
-          const absoluteLeft = barsRect.left - rect.left + clickRel;
-          if (absoluteLeft + 340 < rect.width) {
-            infoBox.style.left = (absoluteLeft + 25) + 'px';
-          } else {
-            infoBox.style.left = (absoluteLeft - 340) + 'px';
-          }
-          infoBox.style.top = '70px';
-        } else {
-          infoBox.style.left = '20px';
-          infoBox.style.top = '80px';
-        }
-        infoBox.style.display = 'block';
-        tooltip.style.display = 'none';
-        line.style.backgroundColor = '#f97316';
-        line.style.width = '3px';
-        line.style.boxShadow = '0 0 10px #f97316';
+        tooltipDiv.style.display = 'none';
+        verticalLine.style.width = '3px';
+        verticalLine.style.backgroundColor = '#f97316';
+        updateVerticalLinePosition(currentSnappedSec);
       } 
       else if (isSnapped) {
         isSnapped = false;
-        infoBox.style.display = 'none';
-        line.style.backgroundColor = '#f97316';
-        line.style.width = '2px';
-        line.style.boxShadow = '0 0 6px #f97316';
-        tooltip.style.display = 'none';
+        currentSnappedSec = null;
+        infoBoxDiv.style.display = 'none';
+        verticalLine.style.width = '2px';
+        verticalLine.style.backgroundColor = '#f97316';
+        verticalLine.style.display = 'none';
+        tooltipDiv.style.display = 'none';
       }
     });
     
     container.addEventListener('mouseleave', () => {
       if (!isSnapped) {
-        line.style.display = 'none';
-        tooltip.style.display = 'none';
+        verticalLine.style.display = 'none';
+        tooltipDiv.style.display = 'none';
+      }
+    });
+    
+    // برای بروز رسانی موقعیت خط در هنگام اسکرول در حالت snapped
+    container.addEventListener('scroll', () => {
+      if (isSnapped && currentSnappedSec !== null) {
+        updateVerticalLinePosition(currentSnappedSec);
       }
     });
     
     window.addEventListener('resize', () => {
-      if (!isSnapped) {
-        line.style.display = 'none';
-        tooltip.style.display = 'none';
+      if (isSnapped && currentSnappedSec !== null) {
+        setTimeout(() => updateVerticalLinePosition(currentSnappedSec), 30);
       }
-      // re-render dynamic width on resize
-      const newWidthJobs = currentFilter === 'all' ? allJobs : allJobs.filter(job => {
-        const ov = findAllOverlaps(allJobs);
-        const overlapNames = new Set();
-        ov.forEach(o => o.jobs.forEach(j => overlapNames.add(j)));
-        return overlapNames.has(job.name);
-      });
-      render(newWidthJobs);
     });
   }
   
+  // بارگذاری XML
   async function loadData() {
     try {
-      // استفاده از فایل jobs.xml که در کنار صفحه هست (با همان ساختار)
       const response = await fetch('jobs.xml');
       const xmlText = await response.text();
       const parser = new DOMParser();
       const xml = parser.parseFromString(xmlText, 'text/xml');
       const nodes = xml.getElementsByTagName('Job');
-      
       allJobs = Array.from(nodes).map(node => ({
         name: node.getAttribute('name'),
         start: node.getAttribute('start'),
         end: node.getAttribute('end')
       }));
-      
-      const overlapsTemp = findAllOverlaps(allJobs);
-      const overlapJobSet = new Set();
-      overlapsTemp.forEach(o => o.jobs.forEach(j => overlapJobSet.add(j)));
-      
-      const infoDiv = document.getElementById('info');
-      infoDiv.innerHTML = overlapJobSet.size > 0 ? `🔴 ${overlapJobSet.size} جاب همپوشان داریم` : '✅ بدون همپوشانی';
-      
+      const overlaps = findAllOverlaps(allJobs);
+      const overlapNames = new Set();
+      overlaps.forEach(o => o.jobs.forEach(j => overlapNames.add(j)));
+      document.getElementById('info').innerHTML = overlapNames.size > 0 ? `🔴 ${overlapNames.size} جاب همپوشان` : '✅ بدون همپوشانی';
       render(allJobs);
+      initMouseTracking();
       
       document.getElementById('btnAll').onclick = () => {
         if (currentFilter === 'all') return;
         currentFilter = 'all';
+        isSnapped = false; currentSnappedSec = null;
+        if(infoBoxDiv) infoBoxDiv.style.display = 'none';
         document.getElementById('btnAll').classList.add('active');
         document.getElementById('btnOverlap').classList.remove('active');
-        isSnapped = false;
         render(allJobs);
-        infoDiv.innerHTML = overlapJobSet.size > 0 ? `🔴 ${overlapJobSet.size} جاب همپوشان` : '✅ بدون همپوشانی';
+        document.getElementById('info').innerHTML = overlapNames.size > 0 ? `🔴 ${overlapNames.size} جاب همپوشان` : '✅ بدون همپوشانی';
       };
       
       document.getElementById('btnOverlap').onclick = () => {
         if (currentFilter === 'overlap') return;
         currentFilter = 'overlap';
+        isSnapped = false; currentSnappedSec = null;
+        if(infoBoxDiv) infoBoxDiv.style.display = 'none';
         document.getElementById('btnAll').classList.remove('active');
         document.getElementById('btnOverlap').classList.add('active');
-        const overlaps = findAllOverlaps(allJobs);
-        const overlapNames = new Set();
-        overlaps.forEach(o => o.jobs.forEach(j => overlapNames.add(j)));
-        const filtered = allJobs.filter(job => overlapNames.has(job.name));
-        isSnapped = false;
+        const ov = findAllOverlaps(allJobs);
+        const nameSet = new Set();
+        ov.forEach(o => o.jobs.forEach(j => nameSet.add(j)));
+        const filtered = allJobs.filter(job => nameSet.has(job.name));
         render(filtered);
-        infoDiv.innerHTML = `🔴 ${filtered.length} جاب در همپوشانی`;
+        document.getElementById('info').innerHTML = `🔴 ${filtered.length} جاب دارای همپوشانی`;
       };
       
     } catch(e) {
       console.warn(e);
-      document.getElementById('info').innerHTML = '❌ خطا در بارگذاری XML. دیتای نمونه ایجاد شد.';
-      // fallback sample data در صورت نبود xml (برای اطمینان از نمایش)
+      document.getElementById('info').innerHTML = '⚠️ نمونه دیتا (XML缺失)';
       allJobs = [
         { name: "ETL_Orders", start: "02:30:00", end: "05:45:00" },
         { name: "DataSync", start: "04:00:00", end: "06:20:00" },
@@ -768,11 +715,11 @@
         { name: "Streaming", start: "13:00:00", end: "15:30:00" },
         { name: "Analytics", start: "14:20:00", end: "17:00:00" }
       ];
-      const fakeOverlaps = findAllOverlaps(allJobs);
-      const overlapSet = new Set();
-      fakeOverlaps.forEach(o => o.jobs.forEach(j => overlapSet.add(j)));
-      document.getElementById('info').innerHTML = overlapSet.size > 0 ? `🔴 ${overlapSet.size} جاب همپوشان (نمونه)` : '✅ بدون همپوشانی';
       render(allJobs);
+      initMouseTracking();
+      const ov = findAllOverlaps(allJobs);
+      const sz = new Set(); ov.forEach(o=>o.jobs.forEach(j=>sz.add(j)));
+      document.getElementById('info').innerHTML = sz.size > 0 ? `🔴 ${sz.size} همپوشان (نمونه)` : '✅ بدونهمپوشانی';
     }
   }
   
